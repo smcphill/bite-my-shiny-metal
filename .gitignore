@@ -1,0 +1,5 @@
+.bundle
+doc/
+spec/reports
+tmp
+bin
