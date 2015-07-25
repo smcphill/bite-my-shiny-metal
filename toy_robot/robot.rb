@@ -1,59 +1,43 @@
   class Robot
-    def initialize
-      @placed = false
-      @orientation = nil
-    end
+
+    attr_accessor :alignment
 
     def left
-      @orientation = {
+      @alignment = {
         north: :west,
         south: :east,
         east: :north,
         west: :south
-      }[@orientation]
+      }[@alignment]
     end
 
     def right
-      @orientation = {
+      @alignment = {
         north: :east,
         south: :west,
         east: :south,
         west: :north
-      }[@orientation]
+      }[@alignment]
     end
 
-    def move(starting_from)
+    def step
       {
         north: {
-          x: starting_from[:x],
-          y: starting_from[:y] + 1
+          x: 0,
+          y: 1
         },
         west:  {
-          x: starting_from[:x] - 1,
-          y: starting_from[:y]
+          x: -1,
+          y: 0
         },
         south: {
-          x: starting_from[:x],
-          y: starting_from[:y] - 1
+          x: 0,
+          y: -1
         },
         east:  {
-          x: starting_from[:x] + 1,
-          y: starting_from[:y]
+          x: 1,
+          y: 0
         }
-      }[@orientation]
-    end
-
-    def placed?
-      @placed
-    end
-
-    def place(aspect)
-      @placed = true
-      @orientation = aspect
-    end
-
-    def bearing
-      return nil unless placed?
-      @orientation
+      }[@alignment]
     end
   end
