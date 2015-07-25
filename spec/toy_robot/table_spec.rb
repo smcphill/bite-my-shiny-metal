@@ -17,12 +17,5 @@ describe Table do
         expect(result).to be false
       end
     end
-
-    context 'when invalid coordinates are supplied' do
-      let(:coordinates) { { x: 0, y: 'four'} }
-      it 'returns false' do
-        expect(result).to be false
-      end
-    end
   end
 end
