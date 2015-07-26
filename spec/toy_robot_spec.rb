@@ -2,64 +2,57 @@ require 'spec_helper'
 
 describe ToyRobot do
   describe '.simulate' do
-    let(:lines) { [] }
+    let(:lines)      { nil }
+    let(:input)      { StringIO.new }
+    let(:output)     { StringIO.new }
+    let(:simulation) { ToyRobot::Simulation.new }
+    let(:result)     { described_class.simulate input: lines, output: output }
 
     before do
-      simulation = instance_double 'Simulation', :instruct
-      input = double 'ARGF', each: lines
-      output = instance_double '$stdout', :puts
+      allow(input).to receive(:each).and_return(lines)
+      allow(output).to receive(:puts)
+      allow(simulation).to receive(:instruct).and_call_original
+      allow(ToyRobot::Simulation).to receive(:new).and_return(simulation)
+      result
     end
 
-    context 'with an invalid instruction' do
-      let(:lines) { ['SUDO MAKE ME A SANDWICH'] }
-      it 'instructs the simulation' do
-        expect(simulation).to have_received(:instruct).with('SUDO MAKE ME A SANDWICH')
+    context 'with empty input' do
+      let(:lines) { [] }
+
+      it "doesn't instruct the simulation" do
+        expect(simulation).not_to have_received(:instruct)
       end
 
-      it 'produce no output' do
+      it 'outputs nothing' do
         expect(output).not_to have_received(:puts)
       end
     end
 
-    context 'with a valid instruction' do
-      context 'PLACE...' do
-        it 'instructs the simulation' do
-        end
+    context 'with invalid input' do
+      let(:lines) { ['PLACE 1'] }
 
-        it 'produce no output' do
-        end
+      it 'instructs the simulation' do
+        expect(simulation).to have_received(:instruct)
       end
 
-      context 'REPORT' do
-        it 'instructs the simulation' do
-        end
-
-        it 'outputs the simulation response' do
-        end
+      it 'outputs nothing' do
+        expect(output).not_to have_received(:puts)
       end
+    end
 
-      context 'MOVE' do
-        it 'instructs the simulation' do
-        end
+    context 'with input including PLACE and REPORT commands' do
+      let(:lines) { ['PLACE 0,0,EAST', 'REPORT'] }
 
-        it 'produce no output' do
-        end
+      it 'outputs any simulation response' do
+        expect(output).to have_received(:puts).with('0,0,EAST')
       end
+    end
 
-      context 'LEFT' do
-        it 'instructs the simulation' do
-        end
+    context 'with valid input not including a REPORT command' do
+      let(:lines) { ['PLACE 0,0,EAST', 'MOVE'] }
 
-        it 'produce no output' do
-        end
-      end
-
-      context 'RIGHT' do
-        it 'instructs the simulation' do
-        end
-
-        it 'produce no output' do
-        end
+      it 'outputs nothing' do
+        expect(output).not_to have_received(:puts)
       end
     end
   end
