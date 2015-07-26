@@ -1,4 +1,4 @@
-class Table
+class SquareTable
   def initialize
     @dimension = 5
   end
