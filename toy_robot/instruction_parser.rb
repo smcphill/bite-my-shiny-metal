@@ -1,6 +1,7 @@
 module ToyRobot
   class InstructionParser
     def parse(instruction)
+      return unless instruction
       (command, arguments) = instruction.split ' '
       request = {}
       request[:command]   = symbolize command
@@ -13,7 +14,8 @@ module ToyRobot
     def valid_instruction?(request)
       valid_command = COMMANDS.include?(request[:command])
       if request[:command] == :place
-        valid_arguments = request.key?(:arguments) && valid_arguments?(request[:arguments])
+        arguments = request[:arguments]
+        valid_arguments = arguments && valid_arguments?(arguments)
       else
         valid_arguments = !request.key?(:arguments)
       end

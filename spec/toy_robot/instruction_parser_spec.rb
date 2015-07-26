@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe ToyRobot::InstructionParser do
   describe '#parse' do
-    let(:instruction) { '' }
+    let(:instruction) { nil }
     let(:result)      { subject.parse instruction }
 
     context 'when the command is not known' do
