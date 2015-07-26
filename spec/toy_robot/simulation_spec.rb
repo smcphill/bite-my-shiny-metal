@@ -20,7 +20,7 @@ describe ToyRobot::Simulation do
       end
     end
 
-    context 'with a valid instruction' do
+    context 'with a known instruction' do
       context 'report' do
         let(:instruction) { 'REPORT' }
 
@@ -46,19 +46,20 @@ describe ToyRobot::Simulation do
       end
 
       context 'place' do
+        before do
+          result
+        end
+
         context 'when the move is unsafe' do
           let(:instruction) { 'PLACE 50,10,NORTH' }
 
-          it 'returns nil' do
-            expect(result).to be nil
+          it 'does not place the robot on the table' do
+            expect(table.placement).to be nil
           end
         end
 
         context 'when the move is safe' do
           let(:instruction) { 'PLACE 4,0,NORTH' }
-          before do
-            result
-          end
 
           it 'places the robot on the table' do
             expect(table.placed?).to eq true
