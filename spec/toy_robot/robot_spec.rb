@@ -2,45 +2,45 @@ require 'spec_helper'
 
 describe ToyRobot::Robot do
   describe '#step' do
-    let(:aspect) { nil }
+    let(:bearing) { nil }
     let(:result) { subject.step }
 
     before do
-      subject.alignment = aspect
+      subject.bearing = bearing
     end
 
-    context 'before being aligned' do
+    context 'with no bearing' do
       it 'returns nil' do
         expect(result).to be nil
       end
     end
 
-    context 'aligned west' do
-      let(:aspect) { :west }
+    context 'when bearing west' do
+      let(:bearing) { :west }
 
       it 'provides a delta (-1, 0)' do
         expect(result).to eq(x: -1, y: 0)
       end
     end
 
-    context 'aligned south' do
-      let(:aspect) { :south }
+    context 'when bearing south' do
+      let(:bearing) { :south }
 
       it 'provides a delta (0, -1)' do
         expect(result).to eq(x: 0, y: -1)
       end
     end
 
-    context 'aligned east' do
-      let(:aspect) { :east }
+    context 'when bearing east' do
+      let(:bearing) { :east }
 
       it 'provides a delta (+1, 0)' do
         expect(result).to eq(x: 1, y: 0)
       end
     end
 
-    context 'aligned north' do
-      let(:aspect) { :north }
+    context 'when bearing north' do
+      let(:bearing) { :north }
 
       it 'provides a delta (0, +1)' do
         expect(result).to eq(x: 0, y: 1)
@@ -49,45 +49,45 @@ describe ToyRobot::Robot do
   end
 
   describe '#left' do
-    let(:aspect) { :nil }
+    let(:bearing) { :nil }
     let(:result) { subject.left }
 
     before do
-      subject.alignment = aspect
+      subject.bearing = bearing
     end
 
-    context 'not aligned' do
+    context 'with no bearing' do
       it 'returns nil' do
         expect(result).to be nil
       end
     end
 
-    context 'aligned west' do
-      let(:aspect) { :west }
+    context 'when bearing west' do
+      let(:bearing) { :west }
 
       it 'faces south' do
         expect(result).to be :south
       end
     end
 
-    context 'aligned south' do
-      let(:aspect) { :south }
+    context 'when bearing south' do
+      let(:bearing) { :south }
 
       it 'faces east' do
         expect(result).to be :east
       end
     end
 
-    context 'aligned east' do
-      let(:aspect) { :east }
+    context 'when bearing east' do
+      let(:bearing) { :east }
 
       it 'faces north' do
         expect(result).to be :north
       end
     end
 
-    context 'aligned north' do
-      let(:aspect) { :north }
+    context 'when bearing north' do
+      let(:bearing) { :north }
 
       it 'faces west' do
         expect(result).to be :west
@@ -96,45 +96,45 @@ describe ToyRobot::Robot do
   end
 
   describe '#right' do
-    let(:aspect) { :nil }
+    let(:bearing) { :nil }
     let(:result) { subject.right }
 
     before do
-      subject.alignment = aspect
+      subject.bearing = bearing
     end
 
-    context 'not aligned' do
+    context 'with no bearing' do
       it 'returns nil' do
         expect(result).to be nil
       end
     end
 
-    context 'aligned west' do
-      let(:aspect) { :west }
+    context 'when bearing west' do
+      let(:bearing) { :west }
 
       it 'faces north' do
         expect(result).to be :north
       end
     end
 
-    context 'aligned south' do
-      let(:aspect) { :south }
+    context 'when bearing south' do
+      let(:bearing) { :south }
 
       it 'faces west' do
         expect(result).to be :west
       end
     end
 
-    context 'aligned east' do
-      let(:aspect) { :east }
+    context 'when bearing east' do
+      let(:bearing) { :east }
 
       it 'faces south' do
         expect(result).to be :south
       end
     end
 
-    context 'aligned north' do
-      let(:aspect) { :north }
+    context 'when bearing north' do
+      let(:bearing) { :north }
 
       it 'faces east' do
         expect(result).to be :east

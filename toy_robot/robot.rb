@@ -1,23 +1,23 @@
 module ToyRobot
   class Robot
-    attr_accessor :alignment
+    attr_accessor :bearing
 
     def left
-      @alignment = {
+      @bearing = {
         north: :west,
         south: :east,
         east: :north,
         west: :south
-      }[@alignment]
+      }[@bearing]
     end
 
     def right
-      @alignment = {
+      @bearing = {
         north: :east,
         south: :west,
         east: :south,
         west: :north
-      }[@alignment]
+      }[@bearing]
     end
 
     def step
@@ -26,7 +26,7 @@ module ToyRobot
         west:  { x: -1, y: 0  },
         south: { x: 0,  y: -1 },
         east:  { x: 1,  y: 0  }
-      }[@alignment]
+      }[@bearing]
     end
   end
 end

@@ -19,7 +19,7 @@ module ToyRobot
       return unless @table.contains?(coordinates)
 
       @table.placement = coordinates
-      @robot.alignment = bearing
+      @robot.bearing = bearing
 
       nil
     end
@@ -28,7 +28,7 @@ module ToyRobot
       return unless @table.placed?
       position = @table.placement
 
-      "#{position[:x]},#{position[:y]},#{@robot.alignment}".upcase
+      "#{position[:x]},#{position[:y]},#{@robot.bearing}".upcase
     end
 
     def left
