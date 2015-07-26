@@ -48,7 +48,7 @@ module ToyRobot
     def move
       return unless @table.placed?
       current = @table.placement
-      outcome = current.merge(@robot.step) { |_key, pos, delta| pos + delta }
+      outcome = current.merge(@robot.move) { |_key, pos, delta| pos + delta }
       @table.placement = outcome if @table.contains?(outcome)
 
       nil

@@ -20,7 +20,7 @@ module ToyRobot
       }[@bearing]
     end
 
-    def step
+    def move
       {
         north: { x: 0,  y: 1  },
         west:  { x: -1, y: 0  },

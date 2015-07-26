@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe ToyRobot::Robot do
-  describe '#step' do
+  describe '#move' do
     let(:bearing) { nil }
-    let(:result) { subject.step }
+    let(:result)  { subject.move }
 
     before do
       subject.bearing = bearing
