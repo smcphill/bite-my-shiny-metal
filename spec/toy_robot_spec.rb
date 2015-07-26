@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe ToyRobot do
   describe '.simulate' do
     let(:lines) { [] }
