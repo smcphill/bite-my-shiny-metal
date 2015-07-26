@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe SquareTable do
+describe ToyRobot::SquareTable do
   describe '#contains?' do
     let(:coordinates) { { x: 0, y: 0 } }
     let(:result)      { subject.contains?(coordinates) }

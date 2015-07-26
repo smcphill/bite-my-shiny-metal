@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Robot do
+describe ToyRobot::Robot do
   describe '#step' do
     let(:aspect) { nil }
     let(:result) { subject.step }
