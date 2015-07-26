@@ -19,7 +19,7 @@ describe ToyRobot::Robot do
       let(:aspect) { :west }
 
       it 'provides a delta (-1, 0)' do
-        expect(result).to eq({ x: -1, y: 0 })
+        expect(result).to eq(x: -1, y: 0)
       end
     end
 
@@ -27,7 +27,7 @@ describe ToyRobot::Robot do
       let(:aspect) { :south }
 
       it 'provides a delta (0, -1)' do
-        expect(result).to eq({ x: 0, y: -1 })
+        expect(result).to eq(x: 0, y: -1)
       end
     end
 
@@ -35,7 +35,7 @@ describe ToyRobot::Robot do
       let(:aspect) { :east }
 
       it 'provides a delta (+1, 0)' do
-        expect(result).to eq({ x: 1, y: 0 })
+        expect(result).to eq(x: 1, y: 0)
       end
     end
 
@@ -43,7 +43,7 @@ describe ToyRobot::Robot do
       let(:aspect) { :north }
 
       it 'provides a delta (0, +1)' do
-        expect(result).to eq({ x: 0, y: 1 })
+        expect(result).to eq(x: 0, y: 1)
       end
     end
   end

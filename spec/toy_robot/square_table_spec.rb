@@ -12,7 +12,7 @@ describe ToyRobot::SquareTable do
     end
 
     context 'when unbounded coordinates are supplied' do
-      let(:coordinates) { { x: 6, y: -1} }
+      let(:coordinates) { { x: 6, y: -1 } }
       it 'returns false' do
         expect(result).to be false
       end
