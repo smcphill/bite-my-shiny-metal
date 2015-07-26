@@ -18,4 +18,22 @@ describe SquareTable do
       end
     end
   end
+
+  describe '#placed?' do
+    context 'when a placement has been made' do
+      before do
+        subject.placement = :north
+      end
+
+      it 'returns true' do
+        expect(subject.placed?).to be true
+      end
+    end
+
+    context 'before a placement has been made' do
+      it 'returns false' do
+        expect(subject.placed?).to be false
+      end
+    end
+  end
 end
