@@ -5,12 +5,12 @@ module ToyRobot
       request = {}
       request[:command]   = symbolize command
       request[:arguments] = parse_arguments arguments if arguments
-      request if valid_request?(request)
+      request if valid_instruction?(request)
     end
 
     private
 
-    def valid_request?(request)
+    def valid_instruction?(request)
       valid_command = COMMANDS.include?(request[:command])
       if request[:command] == :place
         valid_arguments = request.key?(:arguments) && valid_arguments?(request[:arguments])

@@ -5,6 +5,12 @@ describe ToyRobot::InstructionParser do
     let(:instruction) { '' }
     let(:result)      { subject.parse instruction }
 
+    context 'when the command is not known' do
+      it 'returns nil' do
+        expect(result).to be nil
+      end
+    end
+
     context 'with a place command' do
       context 'with valid arguments' do
         let(:instruction) { 'PLACE 0,0,NORTH' }
@@ -24,24 +30,8 @@ describe ToyRobot::InstructionParser do
         end
       end
 
-      context 'without arguments' do
-        let(:instruction) { 'PLACE' }
-
-        it 'returns nil' do
-          expect(result).to be nil
-        end
-      end
-
-      context 'with an invalid bearing' do
-        let(:instruction) { 'PLACE 0,0,NORTHWEST' }
-
-        it 'returns nil' do
-          expect(result).to be nil
-        end
-      end
-
-      context 'with invalid coordinates' do
-        let(:instruction) { 'PLACE 10,DOG,NORTH' }
+      context 'with malformed arguments' do
+        let(:instruction) { 'PLACE 1' }
 
         it 'returns nil' do
           expect(result).to be nil
@@ -50,20 +40,21 @@ describe ToyRobot::InstructionParser do
     end
 
     context 'when the command is known but not place' do
-      context 'with arguments' do
-        it 'returns nil' do
-          expect(result).to be nil
+      let(:instruction) { 'REPORT' }
+
+      context 'without arguments' do
+        it 'returns a valid request' do
+          expected_request = { command: :report }
+          expect(result).to eq(expected_request)
         end
       end
 
-      context 'without arguments' do
-        it 'returns a valid request'
-      end
-    end
+      context 'with arguments' do
+        let(:instruction) { 'MOVE 2,3,EAST' }
 
-    context 'when the command is not known' do
-      it 'returns nil' do
-        expect(result).to be nil
+        it 'returns nil' do
+          expect(result).to be nil
+        end
       end
     end
   end
