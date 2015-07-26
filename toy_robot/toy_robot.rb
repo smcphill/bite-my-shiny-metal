@@ -11,7 +11,7 @@ module ToyRobot
 
   module_function
 
-  def simulate(input: [], output: $stdout)
+  def simulate(input: ARGF, output: $stdout)
     simulation = Simulation.new
     input.each do |line|
       response = simulation.instruct line
@@ -20,4 +20,4 @@ module ToyRobot
   end
 end
 
-ToyRobot.simulate(input: ARGF) if __FILE__ == $PROGRAM_NAME
+ToyRobot.simulate if __FILE__ == $PROGRAM_NAME
