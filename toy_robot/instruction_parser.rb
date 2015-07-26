@@ -13,7 +13,7 @@ module ToyRobot
     def valid_request?(request)
       valid_command = COMMANDS.include?(request[:command])
       if request[:command] == :place
-        valid_arguments = valid_arguments?(request[:arguments])
+        valid_arguments = request.key?(:arguments) && valid_arguments?(request[:arguments])
       else
         valid_arguments = !request.key?(:arguments)
       end
