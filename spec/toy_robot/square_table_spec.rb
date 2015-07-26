@@ -20,6 +20,12 @@ describe ToyRobot::SquareTable do
   end
 
   describe '#placed?' do
+    context 'before a placement has been made' do
+      it 'returns false' do
+        expect(subject.placed?).to be false
+      end
+    end
+
     context 'when a placement has been made' do
       before do
         subject.placement = :north
@@ -27,12 +33,6 @@ describe ToyRobot::SquareTable do
 
       it 'returns true' do
         expect(subject.placed?).to be true
-      end
-    end
-
-    context 'before a placement has been made' do
-      it 'returns false' do
-        expect(subject.placed?).to be false
       end
     end
   end
