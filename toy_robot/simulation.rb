@@ -18,7 +18,7 @@ module ToyRobot
     def place(coordinates: nil, bearing: nil)
       return unless @table.contains?(coordinates)
 
-      @table.placement = coordinates
+      @table.place coordinates
       @robot.bearing = bearing
 
       nil
@@ -49,7 +49,7 @@ module ToyRobot
       return unless @table.placed?
       current = @table.placement
       outcome = current.merge(@robot.move) { |_key, pos, delta| pos + delta }
-      @table.placement = outcome if @table.contains?(outcome)
+      @table.place outcome if @table.contains?(outcome)
 
       nil
     end

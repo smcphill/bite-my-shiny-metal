@@ -1,13 +1,17 @@
 require 'spec_helper'
 
 describe ToyRobot::Simulation do
+  subject do
+    described_class.new robot: robot, table: table, parser: parser
+  end
+
   describe '#instruct' do
     let(:robot)       { ToyRobot::Robot.new }
     let(:table)       { ToyRobot::SquareTable.new }
     let(:parser)      { ToyRobot::InstructionParser.new }
     let(:request)     { nil }
-    subject           { described_class.new robot: robot, table: table, parser: parser }
     let(:result)      { subject.instruct }
+
     before do
       allow(parser).to receive(:parse).and_return(request)
     end
@@ -34,8 +38,8 @@ describe ToyRobot::Simulation do
           let(:request) { { command: :report } }
 
           before do
-            table.placement = { x: 2, y: 3}
-            robot.bearing   = :south
+            table.place(x: 2, y: 3)
+            robot.bearing = :south
           end
 
           it 'reports robot telemetry' do
@@ -76,7 +80,7 @@ describe ToyRobot::Simulation do
             }
           end
           it 'places the robot on the table' do
-            expect(table.placement).to eq({ x: 2, y: 3 })
+            expect(table.placement).to eq(x: 2, y: 3)
           end
 
           it 'aligns the robot' do
@@ -120,8 +124,8 @@ describe ToyRobot::Simulation do
 
         context 'when the robot is placed' do
           before do
-            table.placement = { x: 0, y: 0 }
-            robot.bearing   = :north
+            table.place(x: 0, y: 0)
+            robot.bearing = :north
             result
           end
 
@@ -151,8 +155,8 @@ describe ToyRobot::Simulation do
 
         context 'when the robot is placed' do
           before do
-            table.placement = { x: 0, y: 0 }
-            robot.bearing   = :north
+            table.place(x: 0, y: 0)
+            robot.bearing = :north
             result
           end
 

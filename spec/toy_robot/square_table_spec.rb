@@ -28,12 +28,22 @@ describe ToyRobot::SquareTable do
 
     context 'when a placement has been made' do
       before do
-        subject.placement = :north
+        subject.place(x: 2, y: 3)
       end
 
       it 'returns true' do
         expect(subject.placed?).to be true
       end
+    end
+  end
+
+  describe '#place' do
+    before do
+      subject.place(x: 2, y: 3)
+    end
+
+    it 'sets a placement at the provided coordinates' do
+      expect(subject.placement).to eq(x: 2, y: 3)
     end
   end
 end

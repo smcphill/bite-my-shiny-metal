@@ -1,10 +1,14 @@
 module ToyRobot
   class SquareTable
-    attr_accessor :placement
+    attr_reader :placement
 
     def initialize
       dimension = 5
       @bounds = (0..dimension - 1)
+    end
+
+    def place(coordinates)
+      @placement = coordinates
     end
 
     def placed?
