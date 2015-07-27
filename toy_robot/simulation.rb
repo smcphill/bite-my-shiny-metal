@@ -1,12 +1,12 @@
 module ToyRobot
   class Simulation
-    def initialize
-      @table = SquareTable.new
-      @robot = Robot.new
-      @parser = InstructionParser.new
+    def initialize(robot: Robot.new, table: SquareTable.new, parser: InstructionParser.new)
+      @robot = robot
+      @table = table
+      @parser = parser
     end
 
-    def instruct(instruction)
+    def instruct(instruction=nil)
       request = @parser.parse instruction
       return unless request
       return place request[:arguments] if request[:command] == :place

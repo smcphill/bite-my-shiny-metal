@@ -4,16 +4,16 @@ describe ToyRobot::Simulation do
   describe '#instruct' do
     let(:robot)       { ToyRobot::Robot.new }
     let(:table)       { ToyRobot::SquareTable.new }
-    let(:instruction) { nil }
-    let(:result)      { subject.instruct instruction }
-
+    let(:parser)      { ToyRobot::InstructionParser.new }
+    let(:request)     { nil }
+    subject           { described_class.new robot: robot, table: table, parser: parser }
+    let(:result)      { subject.instruct }
     before do
-      allow(ToyRobot::Robot).to receive(:new).and_return(robot)
-      allow(ToyRobot::SquareTable).to receive(:new).and_return(table)
+      allow(parser).to receive(:parse).and_return(request)
     end
 
-    context 'with an invalid instruction' do
-      let(:instruction) { 'PLACE' }
+    context 'with no instruction' do
+      let(:request) { nil }
 
       it 'returns nil' do
         expect(result).to be nil
@@ -22,21 +22,20 @@ describe ToyRobot::Simulation do
 
     context 'with a known instruction' do
       context 'report' do
-        let(:instruction) { 'REPORT' }
+        let(:request) { { command: :report } }
 
         context 'before the robot is placed' do
-          before do
-            allow(table).to receive(:placed?).and_return(false)
-          end
-
           it 'returns nil' do
             expect(result).to be nil
           end
         end
 
         context 'when the robot is placed' do
+          let(:request) { { command: :report } }
+
           before do
-            subject.instruct 'PLACE 2,3,SOUTH'
+            table.placement = { x: 2, y: 3}
+            robot.bearing   = :south
           end
 
           it 'reports robot telemetry' do
@@ -51,7 +50,15 @@ describe ToyRobot::Simulation do
         end
 
         context 'when the move is unsafe' do
-          let(:instruction) { 'PLACE 50,10,NORTH' }
+          let(:request) do
+            {
+              command:   :place,
+              arguments: {
+                coordinates: { x: 50, y: 10 },
+                bearing:     :north
+              }
+            }
+          end
 
           it 'does not place the robot on the table' do
             expect(table.placement).to be nil
@@ -59,25 +66,36 @@ describe ToyRobot::Simulation do
         end
 
         context 'when the move is safe' do
-          let(:instruction) { 'PLACE 4,0,NORTH' }
-
+          let(:request) do
+            {
+              command:   :place,
+              arguments: {
+                coordinates: { x: 2, y: 3 },
+                bearing:     :north
+              }
+            }
+          end
           it 'places the robot on the table' do
-            expect(table.placed?).to eq true
+            expect(table.placement).to eq({ x: 2, y: 3 })
+          end
+
+          it 'aligns the robot' do
+            expect(robot.bearing).to be :north
           end
         end
       end
 
       context 'move' do
-        let(:instruction) { 'MOVE' }
+        let(:request)   { { command: :move } }
+        let(:contains?) { nil }
         before do
           allow(robot).to receive(:move)
+          allow(table).to receive(:contains?).and_return contains?
+          result
         end
 
         context 'when the move is unsafe' do
-          before do
-            allow(table).to receive(:contains?).and_return false
-            result
-          end
+          let(:contains?) { false }
 
           it 'does not instruct the robot to move' do
             expect(robot).not_to have_received(:move)
@@ -85,10 +103,7 @@ describe ToyRobot::Simulation do
         end
 
         context 'when the move is safe' do
-          before do
-            allow(table).to receive(:contains?).and_return true
-            result
-          end
+          let(:contains?) { true }
 
           it 'does not instruct the robot' do
             expect(robot).not_to have_received(:move)
@@ -97,14 +112,16 @@ describe ToyRobot::Simulation do
       end
 
       context 'left' do
-        let(:instruction) { 'LEFT' }
+        let(:request) { { command: :left } }
+
         before do
           allow(robot).to receive(:left)
         end
 
         context 'when the robot is placed' do
           before do
-            subject.instruct 'PLACE 0,0,NORTH'
+            table.placement = { x: 0, y: 0 }
+            robot.bearing   = :north
             result
           end
 
@@ -126,14 +143,16 @@ describe ToyRobot::Simulation do
       end
 
       context 'right' do
-        let(:instruction) { 'RIGHT' }
+        let(:request) { { command: :right } }
+
         before do
           allow(robot).to receive(:right)
         end
 
         context 'when the robot is placed' do
           before do
-            subject.instruct 'PLACE 0,0,NORTH'
+            table.placement = { x: 0, y: 0 }
+            robot.bearing   = :north
             result
           end
 
